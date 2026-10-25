@@ -31,6 +31,9 @@ class SpeciesResource extends Resource
     protected static ?string $navigationLabel = 'Species';
     protected static ?int $navigationSort = 7;
 
+
+    
+
 public static function form(Schema $schema): Schema
 {
     return $schema
@@ -79,12 +82,12 @@ public static function form(Schema $schema): Schema
                                 }
                                 
                                 Notification::make()
-                                    ->title('✅ Data berhasil diambil dari GBIF!')
+                                    ->title(' Data berhasil diambil dari GBIF!')
                                     ->success()
                                     ->send();
                             } else {
                                 Notification::make()
-                                    ->title('❌ ' . ($result['message'] ?? 'Gagal mengambil data'))
+                                    ->title(' ' . ($result['message'] ?? 'Gagal mengambil data'))
                                     ->danger()
                                     ->send();
                             }
@@ -123,6 +126,13 @@ public static function form(Schema $schema): Schema
                 ->label('Endemik Indonesia')
                 ->default(false)
                 ->columnSpan(2),
+
+            Select::make('citation_id')
+    ->label('Referensi / Jurnal Aktif')
+    ->relationship('citation', 'title')
+    ->searchable()
+    ->placeholder('— Tanpa sitasi (tarik untuk menghapus) —')
+    ->helperText('Pilih jurnal mana yang tayang di halaman publik, atau kosongkan untuk menarik sitasi.'),
 
             //  UPLOAD FOTO (REPEATER) - TAMBAHKAN DI SINI
             \Filament\Forms\Components\Repeater::make('media')

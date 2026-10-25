@@ -11,4 +11,5 @@ class Species extends Model {
     public function genus(): BelongsTo { return $this->belongsTo(Genus::class, 'genus_id'); }
     public function citation(): BelongsTo { return $this->belongsTo(Citation::class); }
     public function media(): HasMany { return $this->hasMany(Media::class); }
+    public function contributions(): HasMany { return $this->hasMany(Contribution::class); }
 }
